@@ -1,0 +1,343 @@
+﻿@{
+    ViewData["Title"] = "Home Page";
+    Layout = "_Layout";
+}
+<div class="content-wrapper">
+
+    <div class="container-xxl flex-grow-1 container-p-y">
+        <h4 class="fw-bold py-3 mb-4"><span class="text-muted fw-light">Ana Sayfa/</span> Kayıt</h4>
+
+        <div class="row">
+            <div class="col-xl">
+                <div class="card mb-4">
+                    <div class="card-header d-flex justify-content-between align-items-center">
+                        <h5 class="mb-0">Form</h5>
+                        @*<small class="text-muted float-end">Default label</small>
+                        *@
+                    </div>
+                    <div class="card-body">
+                        <form id="myForm">
+                            <div class="mb-3">
+                                <label class="form-label" for="basic-default-fullname">Departman İsmi</label>
+                                <input type="text" class="form-control" id="departman" placeholder="Bilgi İşlem" />
+                            </div>
+                            <div class="mb-3">
+                                <label class="form-label" for="basic-default-company">IP Adresi</label>
+                                <input type="text" class="form-control" id="ip" placeholder="192.168.1.1" pattern="\b(?:\d{1,3}\.){3}\d{1,3}\b" title="Geçerli bir IP adresi girin." />
+
+                            </div>
+                            <div class="mb-3">
+                                <label class="form-label" for="basic-default-email">Açıklık</label>
+                                <input type="text" class="form-control" id="aciklik" placeholder="Bilgi ifşası" />
+                            </div>
+                            <div class="mb-3">
+                                <label class="form-label" for="basic-default-email">Kullanıcı</label>
+                                <input type="text" class="form-control" id="kullanici" placeholder="Kadir Burak Ünal" />
+                            </div>
+                            <div class="mb-3">
+                                <label class="form-label" for="basic-default-message">Açıklama</label>
+                                <textarea id="aciklama"
+                                          class="form-control"
+                                          placeholder="Merhaba, sorun ile ilgili açıklaman nedir?"></textarea>
+                            </div>
+                            <button type="submit" class="btn btn-primary" id="kaydet" onclick="GetKaydet(event);">Ekle</button>
+                        </form>
+                    </div>
+                </div>
+            </div>
+            <div class="col-xl">
+                <div class="card mb-4">
+                    <h5 class="card-header">Kayıtlı Veriler</h5>
+                    <div class="table-responsive text-nowrap">
+                        <table class="table" id="tablo">
+                            @*  <caption class="ms-4">
+                            Kayıtlı Veriler
+                            </caption> *@
+                            <thead>
+                                <tr>
+                                    <th>Departman İsmi</th>
+                                    <th>IP Adresi</th>
+                                    <th>Açıklık</th>
+                                    <th>Kullanıcı</th>
+                                    <th>Açıklama</th>
+                                </tr>
+                            </thead>
+                        </table>
+                    </div>
+                </div>
+
+
+                <div class="mb-3">
+                    <button type="submit" class="btn btn-primary" onclick="kaydetVeritabanina(event)">Kaydet</button>
+                </div>
+
+            </div>
+
+            <div class="input-group">
+                <input type="file" class="form-control" id="excelInput" accept=".xls, .xlsx" onchange="handleFile()" />
+                <label class="input-group-text" for="inputGroupFile02">Upload</label>
+            </div>
+
+            <div class="card-body demo-vertical-spacing demo-only-element">
+                <div class="col-xl">
+                    <div class="card mb-4">
+                        <div class="card-header d-flex justify-content-between align-items-center">
+                    
+                        <h5 class="mb-0">IP Sorgulama</h5>
+                        </div>
+                        <div class="card-body demo-vertical-spacing demo-only-element">
+                            <div class="input-group">
+                                <input type="text" class="form-control" placeholder="Sorugalamak istediğiniz bir ip adresini giriniz!" aria-label="Recipient's username" aria-describedby="button-addon2" id="ip_data"/>
+                                <button class="btn btn-primary" type="button" data-bs-toggle="modal" data-bs-target="#modalCenter" onclick="ipSorgula()">Sorgula</button>
+
+                                
+                                <div class="modal fade" id="modalCenter" tabindex="-1" aria-hidden="true">
+                                    <div class="modal-dialog modal-dialog-centered modal-lg" role="document">
+                                        <div class="modal-content">
+                                            <div class="table-responsive text-nowrap">
+                                                <table class="table" id="sorgulatablo">
+                                                    <thead>
+                                                        <tr>
+                                                            <th>Departman İsmi</th>
+                                                            <th>IP Adresi</th>
+                                                            <th>Açıklık</th>
+                                                            <th>Kullanıcı</th>
+                                                            <th>Açıklama</th>
+                                                        </tr>
+                                                    </thead>
+                                                </table>
+                                            </div>
+                                            <div class="modal-footer">
+                                                <button type="button" class="btn btn-outline-secondary" data-bs-dismiss="modal">Kapat</button>
+                                                <button type="button" class="btn btn-primary">Değişiklikleri Kaydet</button>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+
+
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+@* 
+            <div class="col-xl">
+                <div class="card mb-4">
+                    <h5 class="card-header">Veri Tabanında Kayıtlı Veriler</h5>
+                    <div class="table-responsive text-nowrap">
+                        <table class="table" id="sorgulatablo">
+                            <thead>
+                                <tr>
+                                    <th>Departman İsmi</th>
+                                    <th>IP Adresi</th>
+                                    <th>Açıklık</th>
+                                    <th>Kullanıcı</th>
+                                    <th>Açıklama</th>
+                                </tr>
+                            </thead>
+                        </table>
+                    </div>
+                </div>
+            </div>
+ *@
+
+            <div id="bildirim-toast" class="bs-toast toast toast-placement-ex m-2 bg-success position-fixed top-50 start-50 translate-middle" role="alert" aria-live="assertive" aria-atomic="true" data-delay="2000">
+                <div class="toast-header">
+                    <i class="bx bx-bell me-2"></i>
+                    <div class="me-auto fw-semibold">Bildirim</div>
+                    <button type="button" class="btn-close" data-bs-dismiss="toast" aria-label="Close"></button>
+                </div>
+                <div class="toast-body">Verileriniz başarıyla veritabanına kaydedildi!</div>
+            </div>
+
+
+        </div>
+    </div>
+
+    <div class="content-backdrop fade"></div>
+</div>
+
+
+<script>
+    function gosterBildirim(renk) {
+        $('#bildirim-toast').removeClass('bg-success bg-danger').addClass(renk);
+        $('#bildirim-toast').toast('show');
+    }
+    function gizleBildirim() {
+        $('#bildirim-toast').toast('hide');
+    }
+</script>
+
+<script>
+    function formuDogrula(event) {
+        var departman = document.getElementById('departman').value.trim();
+        var ip = document.getElementById('ip').value.trim();
+        var aciklik = document.getElementById('aciklik').value.trim();
+        var kullanici = document.getElementById('kullanici').value.trim();
+        if (departman === '' || ip === '' || aciklik === '' || kullanici === '') {
+            alert("Lütfen tüm alanları doldurun.");
+            event.preventDefault();
+            return false;
+        }
+        return true;
+    }
+</script>
+
+
+
+
+<script>
+    function GetKaydet(event) {
+        event.preventDefault();
+
+
+        if (!formuDogrula()) {
+            return;
+        }
+        debugger;
+        var departman = document.getElementById("departman").value;
+        var ip = document.getElementById("ip").value;
+        var aciklik = document.getElementById("aciklik").value;
+        var kullanici = document.getElementById("kullanici").value;
+        var aciklama = document.getElementById("aciklama").value;
+        var table = document.getElementById("tablo");
+       
+        var row = table.insertRow(-1);
+        var cell1 = row.insertCell(0);
+        var cell2 = row.insertCell(1);
+        var cell3 = row.insertCell(2);
+        var cell4 = row.insertCell(3);
+        var cell5 = row.insertCell(4);
+        var cell6 = row.insertCell(5);
+        cell1.innerHTML = departman;
+        cell2.innerHTML = ip;
+        cell3.innerHTML = aciklik;
+        cell4.innerHTML = kullanici;
+        cell5.innerHTML = aciklama;
+        cell6.innerHTML = '<button onclick="silSatir(this)" class="btn rounded-pill btn-danger">Sil</button>';
+
+
+        document.getElementById("departman").value = "";
+        document.getElementById("ip").value = "";
+        document.getElementById("aciklik").value = "";
+        document.getElementById("kullanici").value = "";
+        document.getElementById("aciklama").value = "";
+       
+    }
+    function silSatir(button) {
+        var row = button.parentNode.parentNode;
+        row.parentNode.removeChild(row);
+    }
+
+</script>
+
+<script>
+    function handleFile() {
+        var input = document.getElementById('excelInput');
+        var file = input.files[0];
+
+        if (file) {
+            var reader = new FileReader();
+
+            reader.onload = function (e) {
+                var data = e.target.result;
+                var workbook = XLSX.read(data, { type: 'binary' });
+                var worksheet = workbook.Sheets[workbook.SheetNames[0]];
+                var jsonData = XLSX.utils.sheet_to_json(worksheet, { header: 1 });
+                var table = document.getElementById("tablo");
+                while (table.rows.length > 1) {
+                    table.deleteRow(1);
+                }
+                for (var i = 0; i < jsonData.length; i++) {
+                    var row = table.insertRow(-1);
+                    for (var j = 0; j < jsonData[i].length; j++) {
+                        var cell = row.insertCell(j);
+                        cell.innerHTML = jsonData[i][j];
+                    }
+                    var deleteCell = row.insertCell(jsonData[i].length);
+                    deleteCell.innerHTML = '<button onclick="silSatir(this)" class="btn rounded-pill btn-danger">Sil</button>';
+                }
+            };
+            reader.readAsBinaryString(file);
+        }
+    }
+    function silSatir(button) {
+        var row = button.parentNode.parentNode;
+        row.parentNode.removeChild(row);
+    }
+</script>
+
+
+
+<script>
+    function kaydetVeritabanina() {
+        var table = document.getElementById("tablo");
+
+        for (var i = 1; i < table.rows.length; i++) {
+            var departman = table.rows[i].cells[0].innerHTML;
+            var ipadresi = table.rows[i].cells[1].innerHTML;
+            var aciklik = table.rows[i].cells[2].innerHTML;
+            var kullanici = table.rows[i].cells[3].innerHTML;
+            var aciklama = table.rows[i].cells[4].innerHTML;
+            ajaxIleVeritabaninaKaydet(departman, ipadresi, aciklik, kullanici, aciklama);
+        }
+    }
+    function ajaxIleVeritabaninaKaydet(departman, ipadresi, aciklik, kullanici, aciklama) {
+        debugger;
+        $.ajax({
+            type: "POST",
+            url: "/Home/DataPost",
+            data: {
+                departman: departman,
+                ipadresi: ipadresi,
+                aciklik: aciklik,
+                kullanici: kullanici,
+                aciklama: aciklama
+            },
+            success: function (response) {
+                gosterBildirim('bg-success');
+                console.log("Kayıt başarıyla eklendi.");
+            },
+            error: function (error) {
+                gosterBildirim('bg-danger');
+                console.error("Hata oluştu:", error);
+            }
+        });
+    }
+</script>
+
+
+<script>
+    function ipSorgula() {
+        var _ip = document.getElementById("ip_data").value;
+        $.ajax({
+            type: "GET",
+            url: "/Home/Sorgula",
+            data: { ipdata: _ip },
+            success: function (response) {
+                ekleTabloya(response);
+            },
+            error: function (error) {
+                console.error("Hata oluştu:", error);
+            }
+        });
+    }
+    function ekleTabloya(veriler) {
+        debugger;
+        var table = document.getElementById("sorgulatablo");
+        while (table.rows.length > 1) {
+            table.deleteRow(1);
+        }
+        for (var i = 0; i < veriler.length; i++) {
+            var row = table.insertRow(-1);
+            var keys = Object.keys(veriler[i]);
+            for (var j = 0; j < keys.length; j++) {
+                var cell = row.insertCell(j);
+                cell.innerHTML = veriler[i][keys[j]];
+            }
+            var deleteCell = row.insertCell(keys.length);
+            deleteCell.innerHTML = '<button onclick="silSatir(this)" class="btn rounded-pill btn-danger">Sil</button>';
+        }
+    }
+</script>
